@@ -3,6 +3,8 @@ from langchain.prompts import PromptTemplate
 from utils.api_keys import GROQ_API_KEY
 
 def summarize_all(disruptions, traffic, weather, source, destination, date):
+    if traffic in ["Error geocoding addresses", "Error fetching route", "No route available for the given source and destination."]:
+        return traffic
     prompt = PromptTemplate.from_template(
     """
     === Disruptions ===
@@ -15,15 +17,15 @@ def summarize_all(disruptions, traffic, weather, source, destination, date):
     {weather}
     
     Provide a very short delivery title in the format:
-    "Delivery: {source} → {destination} | Distance: <distance> km | Usual Time: <usual_time> | Delay: <delay> | Weather: <weather_condition> on {date}"
-    (Extract <distance> and <usual_time> from traffic info, <delay> from traffic or disruptions, and <weather_condition> from weather info for the delivery date.)
+    "Delivery: {source} → {destination} | Distance: <distance> km | Usual Time: <usual_time> | Delay: <delay> | Weather: <weather_condition> | Date: {date}"
+    (Extract <distance> and <usual_time> from traffic info, <delay> from traffic or disruptions, and <weather_condition> from weather info for the delivery date. If <usual_time> is greater than 60 min, divide it by 60 to get hours, otherwise keep it in minutes. Use "N/A" if any info is missing.)
     
-    Disruption/Risks in 3-4 lines, summarize any road disruptions and risks for this route and date. If there are no disruptions, mention that also.
+    Disruptions/Risks: summarize any road disruptions and risks for this route and date. If there are no disruptions mention that also, in 3-4 lines.
     
     After that, provide:
-    - Alternate route advice (if any in 2-3 lines)
-    - Expected delays (in days or hours in 1-2 lines)
-    - Concise summary (in 2-3 lines)
+    - Alternate route advice: (if any in 2-3 lines)
+    - Expected delays: (in min or hours in 1-2 lines)
+    - Concise summary: (in 2-3 lines)
     """)
 
     full_prompt = prompt.format(

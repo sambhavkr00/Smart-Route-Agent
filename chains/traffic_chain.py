@@ -31,6 +31,8 @@ def get_traffic_data(source, destination):
     if response.status_code != 200:
         return "Error fetching route"
     data = response.json()
+    if not data.get("routes"):
+        return "No route available for the given source and destination."
     summary = data["routes"][0]["summary"]
     distance_km = summary["lengthInMeters"] / 1000
     travel_time_min = summary["travelTimeInSeconds"] / 60

@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import os
 
-load_dotenv()  # Load from .env
+load_dotenv()
 
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 TOMTOM_API_KEY = os.getenv("TOMTOM_API_KEY")
