@@ -3,7 +3,6 @@ from utils.api_keys import OPENWEATHERMAP_API_KEY
 from datetime import datetime
 
 def get_weather_forecast(destination, date):
-    # Use the destination city for weather forecast
     url = f"http://api.openweathermap.org/data/2.5/forecast"
     params = {
         "q": destination,
@@ -11,6 +10,7 @@ def get_weather_forecast(destination, date):
         "units": "metric"
     }
     response = requests.get(url, params=params)
+
     if response.status_code != 200:
         return "Error fetching weather"
 

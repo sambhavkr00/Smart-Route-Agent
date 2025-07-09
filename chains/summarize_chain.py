@@ -24,7 +24,7 @@ def summarize_all(disruptions, traffic, weather, source, destination, date):
     
     After that, provide:
     - Alternate route advice: (if any in 2-3 lines)
-    - Expected delays: (in min or hours in 1-2 lines)
+    - Expected delays: Extract from traffic info (in min or hours in 1-2 lines)
     - Concise summary: (in 2-3 lines)
     """)
 

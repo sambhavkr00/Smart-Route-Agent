@@ -14,10 +14,11 @@ def get_recent_disruptions(source, destination, date):
         "query": query,
         "search_depth": "advanced",
         "time_range": "week",
-        "max_results": 20
+        "max_results": 20,
     }
 
     response = requests.post(url, json=payload, headers=headers)
+
     if response.status_code != 200:
         return "Error fetching news"
 
